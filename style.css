@@ -1,0 +1,32 @@
+h1, h2, h3, p{
+	font-family: arial;
+	text-align: center;
+}
+
+h1{
+	font-size: 30px;
+}
+
+h2{
+	font-size: 18px;
+	margin-top: 100px;
+}
+
+p{
+	font-size: 15px;
+}
+
+header{
+	margin-bottom: 100px;
+}
+
+#billet{
+	margin-top: 50px;
+}
+
+a{
+	text-decoration: none;
+}
+
+
+
