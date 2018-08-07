@@ -22,9 +22,15 @@ while ($donnees = $reponse->fetch())
 	<p>
 	<?php
 		echo htmlspecialchars($donnees['contenu']);
-	}
 	?>
 	</p>
+	<p>
+		<a href="commentaires.php?billet=<?php echo $donnees['id']; ?>">Commentaires</a>
+	</p>
 </div>
+<?php
+}
+$reponse->closeCursor();
+?>
 </body>
 </html>
