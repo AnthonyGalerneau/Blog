@@ -56,11 +56,6 @@ if ((isset($_GET['billet'])) AND (!empty($billet)))
 	<?php
 	}
 	$reponse->closeCursor();
-}
-else
-{
-	echo '<div> <h2>Page introuvable ! </h2></div>';
-}
 ?>
 <div id="formulaire_commentaire">
 	<form action="commentaires_post.php" method="POST">
@@ -71,5 +66,13 @@ else
 		<input for="id_billet" type="hidden" name="id_billet" id="id_billet" value="<?php echo $_GET['billet']; ?>" />  
     </form>
 </div>
+<?php
+}
+else
+{
+	echo '<div> <h2>Page introuvable ! </h2></div>';
+}
+?>
+
 </body>
 </html>
