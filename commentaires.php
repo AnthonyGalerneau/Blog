@@ -62,5 +62,14 @@ else
 	echo '<div> <h2>Page introuvable ! </h2></div>';
 }
 ?>
+<div id="formulaire_commentaire">
+	<form action="commentaires_post.php" method="POST">
+		<p><label for="auteur"> Pseudo :<input type="text" name="auteur" id="auteur" /></label></p>
+		<p><label for="commentaire">  Commentaire : <textarea name="commentaire" rows="4" cols="30" id="commentaire"></textarea></label></p>
+		<p><input type="submit" /></p> 
+		<input type="hidden" for="date_commentaire" name="date_commentaire" id="date_commentaire" value="<?php echo '' . time();?>" /> 
+		<input for="id_billet" type="hidden" name="id_billet" id="id_billet" value="<?php echo $_GET['billet']; ?>" />  
+    </form>
+</div>
 </body>
 </html>
