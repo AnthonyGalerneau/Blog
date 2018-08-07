@@ -8,16 +8,23 @@
 	<h1>Mon super blog !</h1>
 	<p>Derniers billets du blog</p>
 <?php 
-$bdd = new PDO('mysql:host=localhost;dbname=Blog', 'root', 'root');
+$bdd = new PDO('mysql:host=localhost;dbname=Blog', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 $reponse = $bdd->query('SELECT * FROM billets'); 
 while ($donnees = $reponse->fetch())
 {
-	echo '<p>' . $donnees['titre'] . ' ' . $donnees['date_creation'] . '</p>';
-	echo '<p>' . $donnees['contenu'] . '</p>';
-}
-
-
 ?>
-
+<div id="billet">
+	<h3>
+	<?php
+		echo htmlspecialchars($donnees['titre'] . ' - ' . $donnees['date_creation']);
+	?>
+	</h3>
+	<p>
+	<?php
+		echo htmlspecialchars($donnees['contenu']);
+	}
+	?>
+	</p>
+</div>
 </body>
 </html>
