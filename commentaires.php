@@ -1,13 +1,13 @@
 <?php
 $bdd = new PDO('mysql:host=localhost;dbname=Blog', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
-$reponse = $bdd->prepare('SELECT id, titre, contenu, date_creation FROM billets WHERE id = ?');
+$reponse = $bdd->prepare('SELECT id, titre, contenu,  DATE_FORMAT(date_creation, \'%d/%m/%Y à %Hh%i\') AS date_creation_fr FROM billets WHERE id = ?');
 $reponse->execute(array($_GET['billet']));
 $billet = $reponse->fetch();
 
 $reponse->closeCursor();
 
-$reponse = $bdd->prepare('SELECT auteur, commentaire, date_commentaire FROM commentaires WHERE id_billet = ?');
+$reponse = $bdd->prepare('SELECT auteur, commentaire, DATE_FORMAT(date_commentaire, \'%d/%m/%Y à %Hh%i\') AS date_commentaire_fr FROM commentaires WHERE id_billet = ?');
 $reponse->execute(array($_GET['billet']));
 ?>
 <!DOCTYPE html>
@@ -23,49 +23,49 @@ $reponse->execute(array($_GET['billet']));
 <?php
 if ((isset($_GET['billet'])) AND (!empty($billet)))
 {
-?>
-    <div id="billet">
-        <h3>
-            <?php
-            echo htmlspecialchars($billet['titre'] . ' - ' . $billet['date_creation']);
-            ?>
-        </h3>
-        <p>
-            <?php
-            echo htmlspecialchars($billet['contenu']);
-            ?>
-        </p>
-    </div>
-	<h2>Commentaires :</h2>
-	<?php
-	while ($commentaire = $reponse->fetch())
-	{
 	?>
-	<div id="espace_commentaire">
-		<h3>
+	    <div id="billet">
+	        <h3>
+	            <?php
+	            echo htmlspecialchars($billet['titre'] . ' - ' . $billet['date_creation_fr']);
+	            ?>
+	        </h3>
+	        <p>
+	            <?php
+	            echo htmlspecialchars($billet['contenu']);
+	            ?>
+	        </p>
+	    </div>
+		<h2>Commentaires :</h2>
 		<?php
-			echo htmlspecialchars($commentaire['auteur'] . ' - ' . $commentaire['date_commentaire']);
+		while ($commentaire = $reponse->fetch())
+		{
 		?>
-		</h3>
-		<p>
+		<div id="espace_commentaire">
+			<h3>
+			<?php
+				echo htmlspecialchars($commentaire['auteur'] . ' - ' . $commentaire['date_commentaire_fr']);
+			?>
+			</h3>
+			<p>
+			<?php
+				echo htmlspecialchars($commentaire['commentaire']);
+			?>
+			</p>
+		</div>
 		<?php
-			echo htmlspecialchars($commentaire['commentaire']);
-		?>
-		</p>
+		}
+		$reponse->closeCursor();
+	?>
+	<div id="formulaire_commentaire">
+		<form action="commentaires_post.php" method="POST">
+			<p><label for="auteur"> Pseudo :<input type="text" name="auteur" id="auteur" /></label></p>
+			<p><label for="commentaire">  Commentaire : <textarea name="commentaire" rows="4" cols="30" id="commentaire"></textarea></label></p>
+			<p><input type="submit" /></p> 
+			<input type="hidden" for="date_commentaire" name="date_commentaire" id="date_commentaire" value="<?php echo '' . time();?>" /> 
+			<input for="id_billet" type="hidden" name="id_billet" id="id_billet" value="<?php echo $_GET['billet']; ?>" />  
+	    </form>
 	</div>
-	<?php
-	}
-	$reponse->closeCursor();
-?>
-<div id="formulaire_commentaire">
-	<form action="commentaires_post.php" method="POST">
-		<p><label for="auteur"> Pseudo :<input type="text" name="auteur" id="auteur" /></label></p>
-		<p><label for="commentaire">  Commentaire : <textarea name="commentaire" rows="4" cols="30" id="commentaire"></textarea></label></p>
-		<p><input type="submit" /></p> 
-		<input type="hidden" for="date_commentaire" name="date_commentaire" id="date_commentaire" value="<?php echo '' . time();?>" /> 
-		<input for="id_billet" type="hidden" name="id_billet" id="id_billet" value="<?php echo $_GET['billet']; ?>" />  
-    </form>
-</div>
 <?php
 }
 else
