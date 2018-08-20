@@ -27,14 +27,14 @@ while ($comment = $comments->fetch())
 }
 ?>
 
-<!--<div id="formulaire_commentaire">
-<form action="comments_post.php" method="POST">
+<div id="formulaire_commentaire">
+    <form action="index.php?action=addComment&amp;id=<?= $post['id'] ?>" method="post">
 	<p><label for="author"> Pseudo :<input type="text" name="author" id="author" /></label></p>
 	<p><label for="comment">  Commentaire : <textarea name="comment" rows="4" cols="30" id="comment"></textarea></label></p>
 	<p><input type="submit" /></p> 
-	<input type="hidden" for="comment_date" name="comment_date" id="comment_date value="<?php //echo '' . time();?>" /> 
-	<input for="id_post" type="hidden" name="id_post" id="id_post" value="<?php //echo $_GET['post']; ?>" />  
-</form>-->
+	<input type="hidden" for="comment_date" name="comment_date" id="comment_date value="<?php echo '' . time();?>" /> 
+	<input for="id_post" type="hidden" name="id_post" id="id_post" value="<?php echo $_GET['post']; ?>" />  
+</form>
 
 <?php $content = ob_get_clean(); ?>
 
