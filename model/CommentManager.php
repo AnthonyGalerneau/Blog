@@ -1,6 +1,7 @@
 <?php
+require_once("model/Manager.php");
 
-class CommentManager
+class CommentManager extends Manager
 {
 	public function getComments($postId)
 	{
@@ -18,11 +19,5 @@ class CommentManager
 	    $affectedLines = $comments->execute(array($postId, $author, $comment));
 
 	    return $affectedLines;
-	}
-
-	private function dbConnect()
-	{
-	    $db = new PDO('mysql:host=localhost;dbname=Blog;charset=utf8', 'root', 'root');
-	    return $db;
 	}
 }
