@@ -29,6 +29,10 @@ a{
 	text-decoration: none;
 }
 
+.affichComment a {
+	display: inline;
+}
+
 #formulaire_commentaire{
 	margin-top: 50px;
 }

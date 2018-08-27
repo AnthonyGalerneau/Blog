@@ -1,4 +1,7 @@
 <?php
+
+namespace AnthonyGalerneau\Blog\Model;
+
 require_once("model/Manager.php");
 
 class CommentManager extends Manager
@@ -20,4 +23,24 @@ class CommentManager extends Manager
 
 	    return $affectedLines;
 	}
+
+	public function getModifComment($postId, $id)
+    {
+       $db = $this->dbConnect();
+        $comments = $db->prepare('SELECT * FROM comments WHERE id = ? and post_id = ?');
+        $comments->execute(array($postId, $id));
+        $modifComment = $comments->fetch();
+        $comments->closeCursor();
+        return $modifComment;
+    }
+    
+    public function addModifComment($postId, $id, $author, $comment)
+    {
+    	$id = (int)$id;
+    	var_dump($id, $comment);
+        $db = $this->dbConnect();
+        $req= $db->prepare('UPDATE comments SET author = ?, comment = ? WHERE id = ? and id_post = ?');
+        $req->execute(array($author, $comment, $id, $postId));
+        return $req;
+    }
 }

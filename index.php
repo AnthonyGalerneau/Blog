@@ -29,8 +29,33 @@ try {
                  throw new Exception('Aucun identifiant de billet envoyé');
             }
         }
-    }
-    else {
+        elseif ($_GET['action'] == 'modifComment') {
+            if (isset($_GET['postId']) && $_GET['postId'] > 0) {
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    modifComment($_GET['postId'], $_GET['id']);
+                } else {
+                    throw new Exception('Aucun identifiant de commentaire envoyé');
+                }
+            } else {
+                throw new Exception('Aucun identifiant de billet envoyé');
+            }
+        }
+        elseif ($_GET['action'] == 'addModifComment') {
+            if (isset($_GET['postId']) && $_GET['postId'] > 0) {
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    if (!empty($_POST['author']) && !empty($_POST['comment'])) {
+                        addModifComment($_GET['postId'], $_GET['id'], $_POST['author'], $_POST['comment']);
+                    } else {
+                        throw new Exception('Tous les champs ne sont pas remplis !');
+                    }
+                } else {
+                    throw new Exception('Aucun identifiant de commentaire envoyé');
+                }
+            } else {
+                throw new Exception('Aucun identifiant de billet envoyé');
+            }
+        }
+    } else {
         listPosts();
     }
 }

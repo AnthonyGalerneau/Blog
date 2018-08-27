@@ -6,7 +6,7 @@ require_once('model/CommentManager.php');
 
 function listPosts()
 {
-    $postManager = new PostManager(); // Création d'un objet
+    $postManager = new \AnthonyGalerneau\Blog\Model\PostManager(); // Création d'un objet
     $posts = $postManager->getPosts(); // Appel d'une fonction de cet objet
 
     require('view/frontend/listPostsView.php');
@@ -14,8 +14,8 @@ function listPosts()
 
 function post()
 {
-    $postManager = new PostManager();
-    $commentManager = new CommentManager();
+    $postManager = new \AnthonyGalerneau\Blog\Model\PostManager();
+    $commentManager = new \AnthonyGalerneau\Blog\Model\CommentManager();
 
     $post = $postManager->getPost($_GET['id']);
     $comments = $commentManager->getComments($_GET['id']);
@@ -25,7 +25,7 @@ function post()
 
 function addComment($postId, $author, $comment)
 {
-    $commentManager = new CommentManager();
+    $commentManager = new \AnthonyGalerneau\Blog\Model\CommentManager();
 
     $affectedLines = $commentManager->postComment($postId, $author, $comment);
 
@@ -36,3 +36,31 @@ function addComment($postId, $author, $comment)
         header('Location: index.php?action=post&id=' . $postId);
     }
 }
+
+function modifComment($postId, $id)
+{
+    $commentManager = new \AnthonyGalerneau\Blog\Model\CommentManager();
+    $postManager = new \AnthonyGalerneau\Blog\Model\PostManager();
+
+    $modifComment = $commentManager->getComments($postId, $id);
+    $post = $postManager->getPost($postId);
+    $comment = $modifComment->fetch();
+    require('view/frontend/commentView.php');
+}
+
+function addModifComment($postId, $id, $author, $comment)
+{
+    $commentManager = new \AnthonyGalerneau\Blog\Model\CommentManager();
+    $req = $commentManager->addModifComment($postId, $id, $author, $comment); 
+
+   if ($req === false) {
+        throw new Exception('Impossible de modifier le commentaire !');
+    } else {
+        header('Location: index.php?action=post&id=' . $postId);
+    }
+}
+
+
+
+
+
