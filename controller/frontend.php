@@ -42,10 +42,16 @@ function modifComment($postId, $id)
     $commentManager = new \AnthonyGalerneau\Blog\Model\CommentManager();
     $postManager = new \AnthonyGalerneau\Blog\Model\PostManager();
 
-    $modifComment = $commentManager->getComments($postId, $id);
+    $modifComment = $commentManager->getModifComment($postId, $id);
     $post = $postManager->getPost($postId);
     $comment = $modifComment->fetch();
-    require('view/frontend/commentView.php');
+    if ($comment === false) 
+    {
+        throw new Exception('Commentaire introuvable !');
+    } else {
+        require('view/frontend/commentView.php');
+    }
+   
 }
 
 function addModifComment($postId, $id, $author, $comment)
@@ -53,9 +59,11 @@ function addModifComment($postId, $id, $author, $comment)
     $commentManager = new \AnthonyGalerneau\Blog\Model\CommentManager();
     $req = $commentManager->addModifComment($postId, $id, $author, $comment); 
 
-   if ($req === false) {
+   if ($req === false) 
+   {
         throw new Exception('Impossible de modifier le commentaire !');
-    } else {
+    } else 
+    {
         header('Location: index.php?action=post&id=' . $postId);
     }
 }

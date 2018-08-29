@@ -22,7 +22,7 @@ while ($comment = $comments->fetch())
 {
 ?>
     <div class="affichComment">
-        <p><strong><?= htmlspecialchars($comment['author']) ?></strong> le <?= $comment['comment_date_fr'] ?><a href="index.php?action=modifComment&amp;id=<?= $comment['id']?>&amp;postId=<?= $post['id'] ?>"> (modifier)</a></p>
+        <p><strong><?= htmlspecialchars($comment['author']) ?></strong> le <?= $comment['comment_date_fr'] ?><a href="index.php?action=modifComment&amp;postId=<?= $post['id'] ?>&id=<?= $comment['id'] ?>"> (modifier)</a></p>
         <p><?= nl2br(htmlspecialchars($comment['comment'])) ?></p>
     </div>
 <?php

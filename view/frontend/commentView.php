@@ -1,5 +1,5 @@
 <?php ob_start(); ?>
-Modifier commentaire
+Modifier le commentaire
 <?php $title = ob_get_clean(); ?>
 
 <?php ob_start(); ?>

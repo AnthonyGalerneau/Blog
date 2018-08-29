@@ -27,19 +27,15 @@ class CommentManager extends Manager
 	public function getModifComment($postId, $id)
     {
        $db = $this->dbConnect();
-        $comments = $db->prepare('SELECT * FROM comments WHERE id = ? and post_id = ?');
+        $comments = $db->prepare('SELECT id, id_post, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE id_post = ? AND id = ? ORDER BY comment_date DESC');
         $comments->execute(array($postId, $id));
-        $modifComment = $comments->fetch();
-        $comments->closeCursor();
-        return $modifComment;
+        return $comments;
     }
     
     public function addModifComment($postId, $id, $author, $comment)
     {
-    	$id = (int)$id;
-    	var_dump($id, $comment);
         $db = $this->dbConnect();
-        $req= $db->prepare('UPDATE comments SET author = ?, comment = ? WHERE id = ? and id_post = ?');
+        $req= $db->prepare('UPDATE comments SET author = ?, comment = ?, comment_date = NOW() WHERE id = ? and id_post = ?');
         $req->execute(array($author, $comment, $id, $postId));
         return $req;
     }
